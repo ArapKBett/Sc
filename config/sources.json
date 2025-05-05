@@ -1,0 +1,10 @@
+{
+  "rss_feeds": [
+    "https://www.sentinelone.com/feed/",
+    "https://www.ecouncil.org/feed/"
+  ],
+  "github_repos": [
+    "infosecn1nja/Red-Teaming-Toolkit",
+    "A-poc/BlueTeam-Tools"
+  ]
+}
