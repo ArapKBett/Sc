@@ -10,7 +10,7 @@ A Discord and Telegram bot that collects and shares cybersecurity tips, tricks, 
    git clone https://github.com/ArapKBett/Sc.git
    cd cybersecurity-bot
 
-Run
+## Run
 
 `cd ~/Sc
 pip install -r requirements.txt --user`
