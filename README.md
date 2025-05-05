@@ -11,5 +11,8 @@ A Discord and Telegram bot that collects and shares cybersecurity tips, tricks, 
    cd cybersecurity-bot
 
 Run
-```cd ~/Sc
-python -m src.main```
+`cd ~/Sc
+pip install -r requirements.txt --user`
+
+`cd ~/Sc
+python -m src.main`
