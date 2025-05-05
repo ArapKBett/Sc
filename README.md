@@ -9,3 +9,7 @@ A Discord and Telegram bot that collects and shares cybersecurity tips, tricks, 
    ```bash
    git clone https://github.com/ArapKBett/Sc.git
    cd cybersecurity-bot
+
+Run
+```cd ~/Sc
+python -m src.main```
