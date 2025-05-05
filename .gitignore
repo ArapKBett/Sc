@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+data/cybersecurity.db
+config/config.ini
+cybersecurity-bot.log
