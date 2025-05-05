@@ -1,6 +1,5 @@
-import schedule
-import time
 import asyncio
+import logging
 from src.bot.shared import CATEGORIES
 
 class Scheduler:
@@ -8,18 +7,21 @@ class Scheduler:
         self.discord_bot = discord_bot
         self.telegram_bot = telegram_bot
 
-    def schedule_posts(self, interval_seconds):
-        """Schedule periodic posts for each category."""
-        async def post_job():
-            for category in CATEGORIES:
-                await self.discord_bot.post_tip(category)
-                await self.telegram_bot.post_tip(category)
-                await asyncio.sleep(10)  # Small delay between posts
+    async def post_job(self):
+        """Post a tip for each category to both bots."""
+        logger = logging.getLogger()
+        for category in CATEGORIES:
+            logger.info(f"Posting tip for category {category}")
+            await self.discord_bot.post_tip(category)
+            await self.telegram_bot.post_tip(category)
+            await asyncio.sleep(10)  # Small delay between posts
 
-        schedule.every(interval_seconds).seconds.do(lambda: asyncio.create_task(post_job()))
+    async def schedule_posts(self, interval_seconds):
+        """Schedule periodic posts for each category."""
+        while True:
+            await self.post_job()
+            await asyncio.sleep(interval_seconds)
 
     def run(self):
-        """Run the scheduler loop."""
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        """Run the scheduler in an asyncio event loop."""
+        asyncio.run(self.schedule_posts(interval_seconds=60))  # Default interval, overridden by main.py
