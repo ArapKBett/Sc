@@ -1,15 +1,19 @@
 import feedparser
+import logging
 
-def parse_rss_feed(url):
-    """Parse an RSS feed and extract recent entries."""
+def parse_rss_feed(feed_url):
     try:
-        feed = feedparser.parse(url)
+        feed = feedparser.parse(feed_url)
         tips = []
-        for entry in feed.entries[:5]:  # Limit to 5 recent entries
-            content = entry.get('summary', entry.get('title', ''))
-            if content:
-                tips.append({'content': content, 'source': entry.get('link', url)})
+        for entry in feed.entries[:5]:  # Limit to 5 entries
+            content = (entry.get('summary') or entry.get('description') or entry.get('title') or '')[:500]
+            # Remove markup
+            content = content.replace('`', '').replace('[', '').replace(']', '').replace('<', '').replace('>', '')
+            tips.append({
+                'content': f"This article discusses {content.split('.')[0].lower()}.",
+                'source': entry.get('link', feed_url)
+            })
         return tips
     except Exception as e:
-        print(f"Error parsing RSS feed {url}: {e}")
+        logging.getLogger().error(f"Error parsing RSS feed {feed_url}: {e}")
         return []
